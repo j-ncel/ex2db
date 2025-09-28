@@ -31,6 +31,7 @@ Then:
 
 This this the preview of `EX2DB` Streamlit app.
 ![EX2DB Steamlit UI Preview](assets/streamlit_pic.png)
+
 _The sample data shown are not real and generated only by the [Faker](https://github.com/joke2k/faker) package._
 
 ---
