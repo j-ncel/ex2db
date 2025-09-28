@@ -15,7 +15,8 @@ def migrate(file_path: str, db_uri: str, sheet_names: list = None) -> dict:
         try:
             df_clean = clean_dataframe(df)
             validation = validate_dataframe(df_clean)
-            table = build_table_schema(df_clean, table_name=sheet_name.lower())
+            table_name = sheet_name.replace(" ", "").lower()
+            table = build_table_schema(df_clean, table_name=table_name)
             write_dataframe_to_db(df_clean, table, engine)
 
             report[sheet_name] = {
@@ -23,7 +24,7 @@ def migrate(file_path: str, db_uri: str, sheet_names: list = None) -> dict:
                 "rows": len(df_clean),
                 "columns": list(df_clean.columns),
                 "validation": validation,
-                "table": sheet_name.lower()
+                "table": table_name
             }
         except Exception as e:
             report[sheet_name] = {
