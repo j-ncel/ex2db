@@ -5,10 +5,12 @@ from excel.cleaner import clean_dataframe
 from excel.validator import validate_dataframe
 from core.migrator import migrate
 
-st.set_page_config(page_title="EX2DB", layout="centered")
+st.set_page_config(page_title="EX2DB", page_icon="🤝", layout="centered")
 st.title("EX2DB: Excel to Database Migrator")
 
-uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx"])
+uploaded_file = st.file_uploader("Upload an Excel file",
+                                 type=["xlsx", "xlsm"],
+                                 help="Supports Excel Files only.")
 
 st.subheader("Database Configuration")
 db_type = st.selectbox("Choose database type", [
@@ -75,7 +77,11 @@ if uploaded_file:
                 st.error(f"😔 {sheet} failed: {info['message']}")
 
 st.markdown("""
+    <a href="https://github.com/j-ncel/ex2db" target="_blank" style="font-size: 12px; color: lime; text-decoration: none;">
+        Github Repo (jncel)
+    </a>
+    <br>  
     <a href="https://coff.ee/jncel" target="_blank">
-        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="88">
+        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="100">
     </a>
     """, unsafe_allow_html=True)
