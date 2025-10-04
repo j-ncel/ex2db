@@ -3,6 +3,7 @@ from excel.loader import load_excel
 from excel.cleaner import clean_dataframe
 from excel.validator import validate_dataframe
 from core.migrator import migrate
+from db.schema_builder import summarize_sqlalchemy_types
 
 st.set_page_config(page_title="EX2DB", page_icon="🤝", layout="centered")
 st.title("EX2DB: Excel to Database Migrator")
@@ -60,6 +61,10 @@ if uploaded_file:
         st.caption("Validation Report")
         report = validate_dataframe(df_clean)
         st.json(report)
+
+        st.caption("Inferred SQLAlchemy Types")
+        sql_types = summarize_sqlalchemy_types(df_clean)
+        st.json(sql_types)
 
     # Migrate Data
     if st.button("Migrate to Database"):
