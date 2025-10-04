@@ -24,10 +24,17 @@ def build_table_schema(df: pd.DataFrame, table_name: str) -> Table:
     for col_name, dtype in df.dtypes.items():
         col_type = map_dtype_to_sqlalchemy(dtype)
         is_nullable = df[col_name].isnull().any()
-        is_primary = col_name.lower() == "id"
+        is_primary = col_name.lower() in ["id", "uuid"]
 
         column = Column(col_name, col_type,
                         nullable=is_nullable, primary_key=is_primary)
         columns.append(column)
 
     return Table(table_name, metadata, *columns)
+
+
+def summarize_sqlalchemy_types(df: pd.DataFrame) -> dict:
+    return {
+        col: map_dtype_to_sqlalchemy(dtype).__name__
+        for col, dtype in df.dtypes.items()
+    }
